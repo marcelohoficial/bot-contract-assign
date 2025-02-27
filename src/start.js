@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 const xlsx = require("xlsx");
 const path = require("path");
 
-module.exports = async function startDownloads(ids = idsDemo) {
+const startDownloads = async (ids = idsDemo) => {
   const chromePath =
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
@@ -36,9 +36,11 @@ module.exports = async function startDownloads(ids = idsDemo) {
   // await browser.close();
 };
 
+module.exports = { startDownloads };
+
 const idsDemo = [
   "BSZptCjvXtnIklDi9AGi3oCV8PHXydNv",
   "N8ZjvXUAswOvhOThDxzFwByfLH8OMyJp",
   "NHcmwGhtyMtHYuvj7QL1V8rdBmu3kHB6",
 ];
-start(idsDemo);
+startDownloads(idsDemo);

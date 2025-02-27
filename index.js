@@ -1,5 +1,6 @@
 const xlsx = require("xlsx");
 const path = require("path");
+const { startDownloads } = require("./src/start");
 
 // Caminho do arquivo Excel
 const filePath = path.join(__dirname + "/upload", "list.xlsx");

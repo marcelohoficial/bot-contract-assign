@@ -10,7 +10,7 @@ if (!fs.existsSync(DOWNLOAD_DIR)) {
   fs.mkdirSync(DOWNLOAD_DIR, { recursive: true });
 }
 
-const startDownloads = async (ids) => {
+const download = async (ids) => {
   if (!ids.length) {
     console.log("Nenhum ID encontrado!");
     return;
@@ -81,4 +81,4 @@ const zipFiles = async () => {
   });
 };
 
-module.exports = { startDownloads, ZIP_PATH };
+module.exports = { download, ZIP_PATH };

@@ -1,6 +1,7 @@
 const xlsx = require("xlsx");
 const path = require("path");
 const { startDownloads } = require("./src/start");
+const { download } = require("./main");
 
 // Caminho do arquivo Excel
 const filePath = path.join(__dirname + "/upload", "list.xlsx");
@@ -24,4 +25,4 @@ const ids = data
   .filter((id) => id !== undefined && id.length === 32);
 
 console.log("Total de IDs:", ids.length);
-startDownloads(ids);
+download(ids);

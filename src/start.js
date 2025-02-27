@@ -15,25 +15,25 @@ const startDownloads = async (ids = idsDemo) => {
   const page = await browser.newPage();
 
   for (const id of ids) {
-    for (let a = 1; a < 3; a++) {
-      try {
-        // const url = `https://conta.oxpay.com.br/contract/${ids[0]}/1`;
-        const url = `https://web-oxpay.netlify.app/contract/${id}/${a}`;
-        // const url = `https://localhost:3000/contract/${ids[0]}/1`;
-        console.log(`Acessando: ${url}`);
-        await page.goto(url, { waitUntil: "networkidle2" });
+    // for (let a = 1; a < 3; a++) {
+    try {
+      // const url = `https://conta.oxpay.com.br/contract/${ids[0]}/1`;
+      const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
+      // const url = `https://localhost:3000/contract/${ids[0]}/1`;
+      console.log(`Acessando: ${url}`);
+      await page.goto(url, { waitUntil: "networkidle2" });
 
-        setTimeout(() => {
-          return;
-        }, 10000);
+      setTimeout(() => {
+        return;
+      }, 10000);
 
-        await page.waitForSelector("#download");
-        await page.click("#download");
-      } catch (err) {
-        console.log(err);
-        break;
-      }
+      await page.waitForSelector("#download");
+      await page.click("#download");
+    } catch (err) {
+      console.log(err);
+      break;
     }
+    // }
   }
 
   console.log("Processo concluído.");

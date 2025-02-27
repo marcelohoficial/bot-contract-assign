@@ -49,7 +49,12 @@ const download = async (ids) => {
       });
 
       await page.click("#download");
-      await page.waitForTimeout(5000); // Aguarda o download
+
+      await page.evaluate(() =>
+        setTimeout(() => {
+          console.log("Pausa");
+        }, 10000)
+      );
     } catch (err) {
       console.error(`Erro ao processar ID ${id}:`, err);
     }

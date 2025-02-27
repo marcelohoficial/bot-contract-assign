@@ -19,9 +19,7 @@ const data = xlsx.utils.sheet_to_json(sheet, { header: 1 });
 // Pegar todos os IDs da primeira coluna (ignorando o cabeçalho)
 const ids = data
   .slice(1)
-  .map((row) => {
-    row[0];
-  })
+  .map((row) => row[0])
   .filter((id) => id !== undefined && id.length === 32);
 
 console.log("Total de IDs:", ids.length);

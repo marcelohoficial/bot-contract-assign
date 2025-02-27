@@ -19,7 +19,8 @@ async function start(ids) {
   // for (const id of ids) {
   // for (let a = 1; a < 2; a++) {
   // const url = `https://conta.oxpay.com.br/contract/${ids[0]}/1`;
-  const url = `http://localhost:3000/contract/${ids[0]}/1`;
+  const url = `https://web-oxpay.netlify.app/contract/${ids[0]}/1`;
+  // const url = `https://localhost:3000/contract/${ids[0]}/1`;
   console.log(`Acessando: ${url}`);
   await page.goto(url, { waitUntil: "networkidle2" });
 

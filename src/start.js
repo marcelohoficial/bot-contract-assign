@@ -3,6 +3,10 @@ const xlsx = require("xlsx");
 const path = require("path");
 
 const startDownloads = async (ids) => {
+  if (!ids.length) {
+    console.log("Nenhum ID encontrado!");
+    return;
+  }
   const chromePath =
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 

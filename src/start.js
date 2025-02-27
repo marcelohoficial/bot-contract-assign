@@ -23,6 +23,10 @@ const startDownloads = async (ids = idsDemo) => {
         console.log(`Acessando: ${url}`);
         await page.goto(url, { waitUntil: "networkidle2" });
 
+        setTimeout(() => {
+          return;
+        }, 10000);
+
         await page.waitForSelector("#download");
         await page.click("#download");
       } catch (err) {
@@ -43,4 +47,4 @@ const idsDemo = [
   "N8ZjvXUAswOvhOThDxzFwByfLH8OMyJp",
   "NHcmwGhtyMtHYuvj7QL1V8rdBmu3kHB6",
 ];
-startDownloads(idsDemo);
+// startDownloads(idsDemo);

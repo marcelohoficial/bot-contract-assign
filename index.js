@@ -23,5 +23,5 @@ const ids = data
   })
   .filter((id) => id !== undefined && id.length === 32);
 
-// console.log("Lista de IDs:", ids);
+console.log("Total de IDs:", ids.length);
 startDownloads(ids);

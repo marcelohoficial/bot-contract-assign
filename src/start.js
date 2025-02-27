@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 const xlsx = require("xlsx");
 const path = require("path");
 
-const startDownloads = async (ids = idsDemo) => {
+const startDownloads = async (ids) => {
   const chromePath =
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
@@ -23,9 +23,7 @@ const startDownloads = async (ids = idsDemo) => {
       console.log(`Acessando: ${url}`);
       await page.goto(url, { waitUntil: "networkidle2" });
 
-      setTimeout(() => {
-        return;
-      }, 10000);
+      setTimeout(() => {}, 10000);
 
       await page.waitForSelector("#download");
       await page.click("#download");

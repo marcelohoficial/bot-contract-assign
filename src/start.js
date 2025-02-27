@@ -23,8 +23,6 @@ const startDownloads = async (ids) => {
       console.log(`Acessando: ${url}`);
       await page.goto(url, { waitUntil: "networkidle2" });
 
-      setTimeout(() => {}, 10000);
-
       await page.waitForSelector("#download");
       await page.click("#download");
     } catch (err) {

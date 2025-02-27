@@ -2,8 +2,7 @@ const puppeteer = require("puppeteer");
 const xlsx = require("xlsx");
 const path = require("path");
 
-async function start(ids) {
-  // Iniciar o navegador Puppeteer
+module.exports = async function startDownloads(ids = idsDemo) {
   const chromePath =
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
@@ -13,36 +12,29 @@ async function start(ids) {
     args: ["--start-maximized"],
   });
 
-  // const browser = await puppeteer.launch({ headless: false }); // headless: true para rodar em segundo plano
   const page = await browser.newPage();
 
-  // for (const id of ids) {
-  // for (let a = 1; a < 2; a++) {
-  // const url = `https://conta.oxpay.com.br/contract/${ids[0]}/1`;
-  const url = `https://web-oxpay.netlify.app/contract/${ids[0]}/1`;
-  // const url = `https://localhost:3000/contract/${ids[0]}/1`;
-  console.log(`Acessando: ${url}`);
-  await page.goto(url, { waitUntil: "networkidle2" });
+  for (const id of ids) {
+    for (let a = 1; a < 3; a++) {
+      try {
+        // const url = `https://conta.oxpay.com.br/contract/${ids[0]}/1`;
+        const url = `https://web-oxpay.netlify.app/contract/${id}/${a}`;
+        // const url = `https://localhost:3000/contract/${ids[0]}/1`;
+        console.log(`Acessando: ${url}`);
+        await page.goto(url, { waitUntil: "networkidle2" });
 
-  // Adicionar um pequeno delay entre as requisições
-  // await page.waitForTimeout(20000);
-  // await page.evaluate(() => setTimeout(() => console.log("Tempo"), [5000]));
-  // await page
-  // 	.waitForSelector(
-  // 		"/html/body/pdf-viewer//viewer-toolbar//div/div[3]/viewer-download-controls//cr-icon-button"
-  // 	)
-  // 	.then((e) => console.log("First: ", e));
-  // }
-  // }
-  // page.mouse.move(200, 500);
-  await page.waitForSelector("#download");
-  await page.click("#download");
-
-  // await page.keyboard.type("Hello");
+        await page.waitForSelector("#download");
+        await page.click("#download");
+      } catch (err) {
+        console.log(err);
+        break;
+      }
+    }
+  }
 
   console.log("Processo concluído.");
   // await browser.close();
-}
+};
 
 const idsDemo = [
   "BSZptCjvXtnIklDi9AGi3oCV8PHXydNv",

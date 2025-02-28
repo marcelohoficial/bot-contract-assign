@@ -236,7 +236,7 @@ def ler_ids_do_excel(caminho_arquivo):
 # Exemplo de uso
 if __name__ == "__main__":
     # Configurações
-    BASE_URL = "https://web-oxpay.netlify.app/contract/"  # Substitua pela URL base do seu site
+    BASE_URL = "https://web-oxpay.netlify.app/contract"  # Substitua pela URL base do seu site
     DOWNLOAD_FOLDER = "downloads"  # Pasta para salvar os downloads
     EXCEL_FILE = "teste-ativos.xlsx"  # Arquivo Excel com os IDs
     

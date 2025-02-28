@@ -69,7 +69,7 @@ def download_file(driver, url, id):
         driver.get(url)
         # Espera o botão de download aparecer
         download_button = WebDriverWait(driver, 60).until(
-            EC.presence_of_element_located((By.ID, 'download'))
+            EC.presence_of_element_located((By.ID, 'download')))
         download_button.click()
         # Espera o download ser concluído (ajuste o tempo conforme necessário)
         time.sleep(10)

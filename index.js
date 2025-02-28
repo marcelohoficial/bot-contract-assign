@@ -4,7 +4,7 @@ const { startDownloads } = require("./src/start");
 const { download } = require("./main");
 
 // Caminho do arquivo Excel
-const filePath = path.join(__dirname + "/upload", "alc-inativos.xlsx");
+const filePath = path.join(__dirname + "/upload", "alc-ativos.xlsx");
 
 // Ler o arquivo
 const workbook = xlsx.readFile(filePath);

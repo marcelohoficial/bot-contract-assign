@@ -29,16 +29,28 @@ const download = async (ids) => {
 
   const page = await browser.newPage();
 
+  let totalIds = ids.length;
+  let successIds = 0;
+  let errorIds = 0;
   let retry = [];
   let count = 0;
+  let tryIds = 0;
 
   for (const id of ids) {
+    tryIds++;
     try {
+      const api = `https://api.oxpay.com.br/contract/${id}`;
+
+      if ((await fetch(api).then((res) => res.status)) !== 200) {
+        console.log(`Ignorando: ${id}`);
+        continue;
+      }
+
       const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
       console.log(`Acessando: ${url}`);
       await page.goto(url, { waitUntil: "networkidle2" });
 
-      await page.waitForSelector("#download");
+      await page.waitForSelector("#download", { timeout: 600000 });
       const downloadPath = path.join(DOWNLOAD_DIR, `${id}.pdf`);
 
       // Intercepta as requisições de download
@@ -52,10 +64,12 @@ const download = async (ids) => {
       });
 
       await page.click("#download");
+      successIds++;
     } catch (err) {
       retry.push(id);
       console.error(`Erro ao processar ID ${id}:`, err);
       count = 30;
+      errorIds++;
     }
 
     if (count >= 20) {
@@ -69,12 +83,23 @@ const download = async (ids) => {
       );
       count = 0;
     } else count++;
+
+    if (tryIds > totalIds * 3) break;
   }
 
   if (retry.length) {
     count = 0;
     for (const id of retry) {
+      tryIds++;
       try {
+        const api = `https://api.oxpay.com.br/contract/${id}`;
+
+        if ((await fetch(api).then((res) => res.status)) !== 200) {
+          console.log(`Ignorando: ${id}`);
+          retry.slice(1);
+          continue;
+        }
+
         const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
         console.log(`Acessando: ${url}`);
         await page.goto(url, { waitUntil: "networkidle2" });
@@ -95,6 +120,8 @@ const download = async (ids) => {
         await page.click("#download");
 
         retry.slice(1);
+        successIds++;
+        errorIds--;
       } catch (err) {
         console.error(`Erro ao processar ID ${id}:`, err);
       }
@@ -110,16 +137,26 @@ const download = async (ids) => {
         );
         count = 0;
       } else count++;
+
+      if (tryIds > totalIds * 3) break;
     }
   }
 
-  fs.writeFileSync(__dirname + "retry", JSON.stringify(retry));
+  if (retry.length)
+    fs.writeFileSync(__dirname + "retry", JSON.stringify(retry));
 
   await browser.close();
-  console.log("Todos os downloads concluídos.");
+  console.log(`
+    ---------------Dashboard---------------
+    Total Ids: ${totalIds}
+    Sucessos: ${successIds}
+    Erros: ${errorIds}
+    Tentativas: ${tryIds}
+    Tentativas falhas: ${retry.length}
+  `);
 
   // Compactar os PDFs
-  await zipFiles();
+  if (successIds.length) await zipFiles();
 };
 
 const zipFiles = async () => {

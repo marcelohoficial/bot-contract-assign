@@ -2,6 +2,7 @@ const xlsx = require("xlsx");
 const path = require("path");
 const { startDownloads } = require("./src/start");
 const { download } = require("./main");
+const { getApi } = require("./src/api");
 
 // Caminho do arquivo Excel
 const filePath = path.join(__dirname + "/upload", "basepex-ativos.xlsx");
@@ -23,4 +24,4 @@ const ids = data
   .filter((id) => id !== undefined && id.length === 32);
 
 console.log("Total de IDs:", ids.length);
-download(ids);
+getApi(ids);

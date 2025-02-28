@@ -46,7 +46,8 @@ const download = async (ids) => {
         continue;
       }
 
-      const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
+      // const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
+      const url = `http://localhost:3000/contract/${id}/1`;
       console.log(`Acessando: ${url}`);
       await page.goto(url, { waitUntil: "networkidle0" });
       await delay(5000);
@@ -96,7 +97,8 @@ const download = async (ids) => {
           continue;
         }
 
-        const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
+        // const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
+        const url = `http://localhost:3000/contract/${id}/1`;
         console.log(`Acessando: ${url}`);
         await page.goto(url, { waitUntil: "networkidle0" });
         await delay(5000);

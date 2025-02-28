@@ -22,8 +22,8 @@ const startDownloads = async (ids) => {
     // for (let a = 1; a < 3; a++) {
     try {
       // const url = `https://conta.oxpay.com.br/contract/${ids[0]}/1`;
-      const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
-      // const url = `https://localhost:3000/contract/${ids[0]}/1`;
+      // const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
+      const url = `http://localhost:3000/contract/${id}/1`;
       console.log(`Acessando: ${url}`);
       await page.goto(url, { waitUntil: "networkidle2" });
 

@@ -253,8 +253,8 @@ if __name__ == "__main__":
     downloader = ContractDownloader(
         base_url=BASE_URL,
         download_folder=DOWNLOAD_FOLDER,
-        max_workers=3,  # Ajuste conforme necessário
-        delay_between_ids=2,  # Segundos entre cada ID
+        max_workers=1,  # Ajuste conforme necessário
+        delay_between_ids=5,  # Segundos entre cada ID
         timeout=60  # Tempo máximo de espera para carregar a página
     )
     

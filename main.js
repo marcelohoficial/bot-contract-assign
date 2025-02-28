@@ -48,8 +48,8 @@ const download = async (ids) => {
 
       const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
       console.log(`Acessando: ${url}`);
-      await page.goto(url, { waitUntil: "networkidle2" });
-
+      await page.goto(url, { waitUntil: "networkidle0" });
+      await delay(5000);
       await page.waitForSelector("#download", {
         timeout: 600000,
         visible: true,
@@ -76,14 +76,7 @@ const download = async (ids) => {
     }
 
     if (count >= 10) {
-      await page.waitForFunction(
-        async () =>
-          new Promise(
-            setTimeout(() => {
-              console.log("Pausa");
-            }, 10000)
-          )
-      );
+      await delay(10000);
       count = 0;
     } else count++;
 
@@ -105,8 +98,8 @@ const download = async (ids) => {
 
         const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
         console.log(`Acessando: ${url}`);
-        await page.goto(url, { waitUntil: "networkidle2" });
-
+        await page.goto(url, { waitUntil: "networkidle0" });
+        await delay(5000);
         await page.waitForSelector("#download", {
           timeout: 600000,
           visible: true,
@@ -133,14 +126,7 @@ const download = async (ids) => {
       }
 
       if (count >= 10) {
-        await page.waitForFunction(
-          async () =>
-            new Promise(
-              setTimeout(() => {
-                console.log("Pausa");
-              }, 10000)
-            )
-        );
+        await delay(10000);
         count = 0;
       } else count++;
 
@@ -164,6 +150,12 @@ const download = async (ids) => {
   // Compactar os PDFs
   if (successIds.length) await zipFiles();
 };
+
+function delay(time) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, time);
+  });
+}
 
 const zipFiles = async () => {
   return new Promise((resolve, reject) => {

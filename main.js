@@ -29,6 +29,9 @@ const download = async (ids) => {
 
   const page = await browser.newPage();
 
+  let retry = [];
+  let count = 0;
+
   for (const id of ids) {
     try {
       const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
@@ -49,16 +52,68 @@ const download = async (ids) => {
       });
 
       await page.click("#download");
-
-      await page.evaluate(() =>
-        setTimeout(() => {
-          console.log("Pausa");
-        }, 10000)
-      );
     } catch (err) {
+      retry.push(id);
       console.error(`Erro ao processar ID ${id}:`, err);
+      count = 30;
+    }
+
+    if (count >= 20) {
+      await page.waitForFunction(
+        async () =>
+          new Promise(
+            setTimeout(() => {
+              console.log("Pausa");
+            }, 10000)
+          )
+      );
+      count = 0;
+    } else count++;
+  }
+
+  if (retry.length) {
+    count = 0;
+    for (const id of retry) {
+      try {
+        const url = `https://web-oxpay.netlify.app/contract/${id}/1`;
+        console.log(`Acessando: ${url}`);
+        await page.goto(url, { waitUntil: "networkidle2" });
+
+        await page.waitForSelector("#download");
+        const downloadPath = path.join(DOWNLOAD_DIR, `${id}.pdf`);
+
+        // Intercepta as requisições de download
+        page.on("response", async (response) => {
+          const headers = response.headers();
+          if (headers["content-disposition"]?.includes("attachment")) {
+            const buffer = await response.buffer();
+            fs.writeFileSync(downloadPath, buffer);
+            console.log(`Download concluído: ${downloadPath}`);
+          }
+        });
+
+        await page.click("#download");
+
+        retry.slice(1);
+      } catch (err) {
+        console.error(`Erro ao processar ID ${id}:`, err);
+      }
+
+      if (count >= 20) {
+        await page.waitForFunction(
+          async () =>
+            new Promise(
+              setTimeout(() => {
+                console.log("Pausa");
+              }, 10000)
+            )
+        );
+        count = 0;
+      } else count++;
     }
   }
+
+  fs.writeFileSync(__dirname + "retry", JSON.stringify(retry));
 
   await browser.close();
   console.log("Todos os downloads concluídos.");

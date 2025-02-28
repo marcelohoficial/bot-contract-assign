@@ -59,9 +59,9 @@ class ContractDownloader:
         options.add_argument("--blink-settings=imagesEnabled=false")  # Desabilita imagens
         options.add_argument("--window-size=1920,1080")  # Define tamanho da janela no modo headless
         options.add_argument("--disable-sync")
-options.add_argument("--disable-notifications")
-options.add_argument("--disable-infobars")
-options.add_argument("--enable-automation")
+        options.add_argument("--disable-notifications")
+        options.add_argument("--disable-infobars")
+        options.add_argument("--enable-automation")
         
         # Configurar pasta de download (importante para headless)
         prefs = {

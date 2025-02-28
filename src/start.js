@@ -12,7 +12,7 @@ const startDownloads = async (ids) => {
 
   const browser = await puppeteer.launch({
     // executablePath: chromePath,
-    headless: false,
+    headless: true,
     args: ["--start-maximized"],
   });
 

@@ -50,7 +50,10 @@ const download = async (ids) => {
       console.log(`Acessando: ${url}`);
       await page.goto(url, { waitUntil: "networkidle2" });
 
-      await page.waitForSelector("#download", { timeout: 600000 });
+      await page.waitForSelector("#download", {
+        timeout: 600000,
+        visible: true,
+      });
       const downloadPath = path.join(DOWNLOAD_DIR, `${id}.pdf`);
 
       // Intercepta as requisições de download
@@ -72,7 +75,7 @@ const download = async (ids) => {
       errorIds++;
     }
 
-    if (count >= 20) {
+    if (count >= 10) {
       await page.waitForFunction(
         async () =>
           new Promise(
@@ -104,7 +107,10 @@ const download = async (ids) => {
         console.log(`Acessando: ${url}`);
         await page.goto(url, { waitUntil: "networkidle2" });
 
-        await page.waitForSelector("#download");
+        await page.waitForSelector("#download", {
+          timeout: 600000,
+          visible: true,
+        });
         const downloadPath = path.join(DOWNLOAD_DIR, `${id}.pdf`);
 
         // Intercepta as requisições de download
@@ -126,7 +132,7 @@ const download = async (ids) => {
         console.error(`Erro ao processar ID ${id}:`, err);
       }
 
-      if (count >= 20) {
+      if (count >= 10) {
         await page.waitForFunction(
           async () =>
             new Promise(
